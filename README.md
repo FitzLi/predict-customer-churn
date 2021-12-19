@@ -15,7 +15,9 @@ The repo contains two major files: `churn_library.py` and `churn_script_logging_
 Dependencies required to run files are stored in `requirements.txt` file.
 To install dependencies, run:
 ```
-$ conda create --name <env> --file requirements.txt
+$ conda create -n test_env python=3.8
+$ conda activate test_env
+$ pip install -r requirements.txt
 ```
 
 To run `churn_library.py` file:
