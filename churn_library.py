@@ -28,8 +28,9 @@ def import_data(pth):
     try:
         df_data = pd.read_csv(pth)
         return df_data
-    except FileNotFoundError:
+    except FileNotFoundError as err:
         print('No file found in the input path')
+        raise err
 
 
 def perform_eda(df_data):
@@ -49,13 +50,13 @@ def perform_eda(df_data):
 
     # Univariate, quantitative plot
     plt.figure(figsize=(20, 10))
-    sns.histplot(df['Total_Trans_Ct'])
+    sns.histplot(df_data['Total_Trans_Ct'])
     plt.title('Histogram of Total Trans Ct data')
     plt.savefig('./images/dist_TTC.png')
 
     # Bivariate plot
     plt.figure(figsize=(20, 10))
-    sns.heatmap(df.corr(), annot=False, cmap='Dark2_r', linewidths=2)
+    sns.heatmap(df_data.corr(), annot=False, cmap='Dark2_r', linewidths=2)
     plt.title('Correlation heatmap between variables')
     plt.savefig('./images/heatmap_corr.png')
 
