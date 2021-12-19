@@ -11,12 +11,20 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from pandas.plotting import table
+from pathlib import Path
 import joblib
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
+
+# Create folders to save outputs, if they don't exists already
+EDA_DIR = './images/eda'
+RESULTS_DIR = './images/results'
+MODELS_DIR = './models'
+for DIR in [EDA_DIR, RESULTS_DIR, MODELS_DIR]:
+    Path(DIR).mkdir(parents=True, exist_ok=True)
 
 
 def import_data(pth):
@@ -49,19 +57,19 @@ def perform_eda(df_data):
     plt.figure(figsize=(20, 10))
     df_data['Churn'].hist()
     plt.title('Histogram of Churn data')
-    plt.savefig('./images/hist_Churn.png')
+    plt.savefig(EDA_DIR + '/hist_Churn.png')
 
     # Univariate, quantitative plot
     plt.figure(figsize=(20, 10))
     sns.histplot(df_data['Total_Trans_Ct'])
     plt.title('Histogram of Total Trans Ct data')
-    plt.savefig('./images/dist_TTC.png')
+    plt.savefig(EDA_DIR + '/dist_TTC.png')
 
     # Bivariate plot
     plt.figure(figsize=(20, 10))
     sns.heatmap(df_data.corr(), annot=False, cmap='Dark2_r', linewidths=2)
     plt.title('Correlation heatmap between variables')
-    plt.savefig('./images/heatmap_corr.png')
+    plt.savefig(EDA_DIR + '/heatmap_corr.png')
 
 
 def encoder_helper(df_data, category_lst, response):
@@ -143,7 +151,7 @@ def convert_report_to_image(report, dataset, model_name):
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
     table(ax, df_report)
-    plt.savefig('./images/%s_%s_results.png' % (dataset, model_name))
+    plt.savefig(RESULTS_DIR + '/%s_%s_results.png' % (dataset, model_name))
 
 
 def classification_report_image(y_train,
@@ -226,9 +234,9 @@ def train_models(X_train, X_test, y_train, y_test):
 
     param_grid = {
         'n_estimators': [200, 500],
-        'max_features': ['auto', 'sqrt'],
-        'max_depth': [4, 5, 100],
-        'criterion': ['gini', 'entropy']
+        #'max_features': ['auto', 'sqrt'],
+        #'max_depth': [4, 5, 100],
+        #'criterion': ['gini', 'entropy']
     }
 
     cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
@@ -257,10 +265,10 @@ def train_models(X_train, X_test, y_train, y_test):
         ax=ax,
         alpha=0.8)
     lrc_plot.plot(ax=ax, alpha=0.8)
-    plt.savefig('./images/ROC_curves.png')
+    plt.savefig(RESULTS_DIR + '/ROC_curves.png')
 
-    joblib.dump(cv_rfc.best_estimator_, './models/rfc_model.pkl')
-    joblib.dump(lrc, './models/logistic_model.pkl')
+    joblib.dump(cv_rfc.best_estimator_, MODELS_DIR + '/rfc_model.pkl')
+    joblib.dump(lrc, MODELS_DIR + '/logistic_model.pkl')
 
 
 if __name__ == '__main__':
@@ -292,16 +300,16 @@ if __name__ == '__main__':
     df['Churn'] = df['Attrition_Flag'].apply(
         lambda val: 0 if val == "Existing Customer" else 1
     )
+
+
     perform_eda(df)
     encoder_helper(df, cat_columns, RESPONSE)
-
     X_train, X_test, y_train, y_test = perform_feature_engineering(
         df, RESPONSE)
-    print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
     train_models(X_train, X_test, y_train, y_test)
 
-    rfc_model = joblib.load('./models/rfc_model.pkl')
+    rfc_model = joblib.load(MODELS_DIR + '/rfc_model.pkl')
     feature_importance_plot(
         rfc_model,
         X_train,
-        './images/feature_importance.png')
+        RESULTS_DIR + '/feature_importance.png')
