@@ -6,10 +6,17 @@ Date: 19.12.2021
 '''
 import os
 import logging
+from pathlib import Path
 import churn_library as cls
 
+LOGS_DIR = './logs'
+EDA_DIR = './images/eda'
+MODELS_DIR = './models'
+
+Path(LOGS_DIR).mkdir(parents=True, exist_ok=True)
+
 logging.basicConfig(
-    filename='./logs/churn_library.log',
+    filename=LOGS_DIR + '/churn_library.log',
     level=logging.INFO,
     filemode='w',
     format='%(name)s - %(levelname)s - %(message)s')
@@ -49,9 +56,9 @@ def test_eda(perform_eda):
         raise err
 
     try:
-        assert os.path.exists('./images/hist_Churn.png')
-        assert os.path.exists('./images/dist_TTC.png')
-        assert os.path.exists('./images/heatmap_corr.png')
+        assert os.path.exists(EDA_DIR + '/hist_Churn.png')
+        assert os.path.exists(EDA_DIR + '/dist_TTC.png')
+        assert os.path.exists(EDA_DIR + '/heatmap_corr.png')
     except AssertionError as err:
         logging.error(
             'Testing perform_eda: figures were not saved to images folder')
@@ -67,7 +74,8 @@ def test_encoder_helper(encoder_helper):
         logging.info('Testing encoder_helper: SUCCESS')
     except Exception as err:
         logging.error(
-            'Testing encoder_helper: function fail to run due to error %s', err)
+            'Testing encoder_helper: function fail to run due to error %s',
+            err)
         raise err
 
     try:
@@ -118,8 +126,8 @@ def test_train_models(train_models):
             'Testing train_models: function fail to run due to error %s', err)
 
     try:
-        assert os.path.exists('./models/rfc_model.pkl')
-        assert os.path.exists('./models/logistic_model.pkl')
+        assert os.path.exists(MODELS_DIR + '/rfc_model.pkl')
+        assert os.path.exists(MODELS_DIR + '/logistic_model.pkl')
     except AssertionError as err:
         logging.error(
             'Testing train_models: trained models are not found in \'./models\'')
