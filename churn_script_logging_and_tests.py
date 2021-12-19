@@ -6,8 +6,8 @@ Date: 19.12.2021
 '''
 import os
 import logging
-import churn_library as cls
 from pathlib import Path
+import churn_library as cls
 
 LOGS_DIR = './logs'
 EDA_DIR = './images/eda'
@@ -74,7 +74,8 @@ def test_encoder_helper(encoder_helper):
         logging.info('Testing encoder_helper: SUCCESS')
     except Exception as err:
         logging.error(
-            'Testing encoder_helper: function fail to run due to error %s', err)
+            'Testing encoder_helper: function fail to run due to error %s',
+            err)
         raise err
 
     try:

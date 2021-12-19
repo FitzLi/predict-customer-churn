@@ -5,13 +5,13 @@ Author: Fitz (Chao Li)
 Date: 19.12.2021
 '''
 
+from pathlib import Path
 from sklearn.metrics import plot_roc_curve, classification_report
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from pandas.plotting import table
-from pathlib import Path
 import joblib
 import pandas as pd
 import numpy as np
@@ -234,9 +234,9 @@ def train_models(X_train, X_test, y_train, y_test):
 
     param_grid = {
         'n_estimators': [200, 500],
-        #'max_features': ['auto', 'sqrt'],
-        #'max_depth': [4, 5, 100],
-        #'criterion': ['gini', 'entropy']
+        # 'max_features': ['auto', 'sqrt'],
+        # 'max_depth': [4, 5, 100],
+        # 'criterion': ['gini', 'entropy']
     }
 
     cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
@@ -300,7 +300,6 @@ if __name__ == '__main__':
     df['Churn'] = df['Attrition_Flag'].apply(
         lambda val: 0 if val == "Existing Customer" else 1
     )
-
 
     perform_eda(df)
     encoder_helper(df, cat_columns, RESPONSE)
