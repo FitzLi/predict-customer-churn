@@ -1,5 +1,8 @@
 '''
 The module contains clean-written libraries for predicting customer churn.
+
+Author: Fitz (Chao Li)
+Date: 19.12.2021
 '''
 
 from sklearn.metrics import plot_roc_curve, classification_report

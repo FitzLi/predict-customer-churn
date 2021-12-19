@@ -1,5 +1,8 @@
 '''
 This module tests the functions from `churn_library`, and logs the results.
+
+Author: Fitz (Chao Li)
+Date: 19.12.2021
 '''
 import os
 import logging
