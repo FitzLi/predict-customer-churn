@@ -4,10 +4,12 @@ This module tests the functions from `churn_library`, and logs the results.
 Author: Fitz (Chao Li)
 Date: 19.12.2021
 '''
+
 import os
 import logging
 from pathlib import Path
 import churn_library as cls
+os.environ['QT_QPA_PLATFORM']='offscreen'
 
 LOGS_DIR = './logs'
 EDA_DIR = './images/eda'
@@ -57,7 +59,7 @@ def test_eda(perform_eda):
 
     try:
         assert os.path.exists(EDA_DIR + '/hist_Churn.png')
-        assert os.path.exists(EDA_DIR + '/dist_TTC.png')
+        assert os.path.exists(EDA_DIR + '/hist_TTC.png')
         assert os.path.exists(EDA_DIR + '/heatmap_corr.png')
     except AssertionError as err:
         logging.error(
