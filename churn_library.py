@@ -5,18 +5,20 @@ Author: Fitz (Chao Li)
 Date: 19.12.2021
 '''
 
+import os
 from pathlib import Path
-from sklearn.metrics import plot_roc_curve, classification_report
-from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from pandas.plotting import table
-import joblib
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import joblib
+from pandas.plotting import table
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import plot_roc_curve, classification_report
+os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 sns.set()
 
 # Create folders to save outputs, if they don't exists already
@@ -63,7 +65,7 @@ def perform_eda(df_data):
     plt.figure(figsize=(20, 10))
     sns.histplot(df_data['Total_Trans_Ct'])
     plt.title('Histogram of Total Trans Ct data')
-    plt.savefig(EDA_DIR + '/dist_TTC.png')
+    plt.savefig(EDA_DIR + '/hist_TTC.png')
 
     # Bivariate plot
     plt.figure(figsize=(20, 10))
