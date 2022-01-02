@@ -57,7 +57,7 @@ def perform_eda(df_data):
     '''
     # Univariate, categorical plot
     plt.figure(figsize=(20, 10))
-    df_data['Churn'].hist()
+    sns.histplot(df_data['Churn'])
     plt.title('Histogram of Churn data')
     plt.savefig(EDA_DIR + '/hist_Churn.png')
 

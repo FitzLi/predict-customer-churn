@@ -31,3 +31,29 @@ To run `churn_script_logging_and_tests.py` file:
 $ python churn_script_logging_and_tests.py
 ```
 The resulting test logs are stored in the folder "logs"
+
+## Files in the Repo
+- data
+    - bank_data.csv
+- images
+    - eda
+        - heatmap_corr.png
+        - hist_Churn.png
+        - hist_TTC.png
+    - results
+        - feature_importance.png
+        - ROC_curves.png
+        - test_logistic_regression_results.png
+        - test_random_forest_results.png
+        - train_logistic_regression_results.png
+        - train_random_forest_results.png
+- logs
+    - churn_library.log
+- models
+    - logistic_model.pkl
+    - rfc_model.pkl
+- churn_library.py
+- churn_script_logging_and_tests.py
+- LICENSE
+- requirements.txt
+- README.md
